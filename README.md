@@ -26,7 +26,7 @@ It's a service that shows random quotes, allows to like them and show quote that
    ```shell
    export POSTGRES_PORT=5432 POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres POSTGRES_DB=quotes
    cd containers && docker-compose -f database.yml up -d && cd ..
-   ```   
+   ```
 
    Or
 
@@ -37,15 +37,14 @@ It's a service that shows random quotes, allows to like them and show quote that
 3. Run the following command:
 
     ```shell
-    go run main.go
+    fastapi dev main.py --host "0.0.0.0" --port 1140
     ```
 
-4. Or you can run `Run` configuration if you are using `Goland`
-5. Or you can run the following taskfile command:
+4. Or you can run the following taskfile command:
 
     ```shell
     task run
     ```
 
-6. Import [Quotes](./postman/Quotes.postman_collection.json) collection into `Postman` program
-7. Send request throw `Postman`
+5. Import [Quotes](./postman/Quotes.postman_collection.json) collection into `Postman` program
+6. Send request throw `Postman`
