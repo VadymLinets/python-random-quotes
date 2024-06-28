@@ -6,6 +6,7 @@ class DBInterface(metaclass=ABCMeta):
     def __subclasshook__(cls, subclass):
         return hasattr(subclass, "ping") and callable(subclass.ping)
 
+
 class Service:
     def __init__(self, db: DBInterface):
         self.db = db

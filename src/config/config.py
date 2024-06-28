@@ -1,6 +1,7 @@
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class PostgresConfig(BaseSettings):
     dsn: str = Field(alias="POSTGRES_DSN")
 
