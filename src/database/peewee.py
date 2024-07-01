@@ -78,8 +78,6 @@ class Postgres:
                     Case(None, [((Quote.author == viewed_quote.author), 1)], 2),
                     Quote.likes.desc(),
                 )
-                # .order_by()
-                # .order_by()
                 .limit(1)
                 .get()
             )
