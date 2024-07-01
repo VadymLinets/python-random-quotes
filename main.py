@@ -5,7 +5,7 @@ import src.database.sqlalchemy as sql
 import src.heartbeat.heartbeat as heartbeat
 import src.quote_api.api as api
 import src.quote.quote as quote_srv
-import src.server.quote as handlers
+import src.server.fastapi as handlers
 
 
 db = sql.Postgres(cfg.PostgresConfig())
