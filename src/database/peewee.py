@@ -8,7 +8,6 @@ from peewee import (
     SQL,
     Case,
     DoesNotExist,
-    fn,
 )
 import playhouse.postgres_ext as pg
 from playhouse.db_url import connect
