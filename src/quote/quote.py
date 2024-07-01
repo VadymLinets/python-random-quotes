@@ -32,6 +32,11 @@ class APIInterface(metaclass=ABCMeta):
         )
 
 
+class Quote:
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+
 class Service:
     def __init__(self, cfg: QuotesConfig, db: DBInterface, api: APIInterface):
         self.cfg = cfg
@@ -42,7 +47,13 @@ class Service:
         quotes = self.db.get_quotes(user_id)
         quote = self.__getQuote(quotes)
         self.db.mark_as_viewed(quote.id, user_id)
-        return quote
+        return Quote(
+            id=quote.id,
+            quote=quote.quote,
+            author=quote.author,
+            tags=quote.tags,
+            likes=quote.likes,
+        )
 
     def like_quote(self, user_id: str, quote_id: str):
         view = self.db.get_view(quote_id, user_id)
@@ -57,7 +68,13 @@ class Service:
         if quote is None:
             quote = self.api.get_random_quote()
         self.db.mark_as_viewed(quote.id, user_id)
-        return quote
+        return Quote(
+            id=quote.id,
+            quote=quote.quote,
+            author=quote.author,
+            tags=quote.tags,
+            likes=quote.likes,
+        )
 
     def __getQuote(self, quotes=[]):
         random_percent = random.uniform(0.0, 100.0)
