@@ -6,6 +6,8 @@ services:
       context: ..
     container_name: quote-local
     environment:
+      SERVER: ${SERVER}
+      POSTGRES_ORM: ${POSTGRES_ORM}
       POSTGRES_DSN: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}"
       RANDOM_QUOTE_CHANCE: ${RANDOM_QUOTE_CHANCE}
     ports:

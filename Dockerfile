@@ -19,4 +19,6 @@ ENV PYTHONUNBUFFERED=1
 
 ENV VIRTUAL_ENV=/venv
 ENV PATH="/venv/bin:$PATH"
-CMD ["gunicorn","-b", "0.0.0.0:1140", "-w", "4", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "main:app"]
+
+RUN chmod +x ./scripts/docker/start-server.sh
+ENTRYPOINT ["/bin/bash", "./scripts/docker/start-server.sh"]
