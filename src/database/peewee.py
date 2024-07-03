@@ -47,7 +47,7 @@ class Postgres:
         db.initialize(connect(cfg.dsn))
 
     def ping(self):
-        db.execute_sql('select 1')
+        db.execute_sql("select 1")
 
     def get_quote(self, quote_id: str):
         return Quote.get_by_id(quote_id)

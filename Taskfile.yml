@@ -41,12 +41,12 @@ tasks:
     cmd: bash -c "$RUNNER-compose -f database.yml down"
 
   migrate:
-    desc: Installs and runs alembic migrations engine
+    desc: Run alembic migrations engine
     aliases: [m, mg]
     cmd: alembic upgrade head
 
   lint:
-    desc: Installs and runs ruff linter
+    desc: Run ruff linter
     cmd: ruff check
 
   format:
