@@ -158,6 +158,5 @@ dmypy.json
 cython_debug/
 
 # IDE config files
-.vscode
 .fleet
 .idea
