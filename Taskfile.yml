@@ -6,7 +6,12 @@ tasks:
   run:
     desc: Run python program. It will also start up the database.
     deps: [database-up]
-    cmd: fastapi dev main.py --host $SERVER_HOST --port $SERVER_PORT
+    cmd: |
+      if [ $SERVER == "flask" ]; then
+        flask --app main run  --host $SERVER_HOST --port $SERVER_PORT
+      elif [ $SERVER == "fastapi" ]; then
+        fastapi dev main.py --host $SERVER_HOST --port $SERVER_PORT
+      fi
 
   container-run:
     desc: Run application in the docker or podman container. It will also start up the database.
@@ -25,7 +30,9 @@ tasks:
     desc: Create the database container throw docker or podman.
     dir: "{{.USER_WORKING_DIR}}/containers"
     aliases: [db]
-    cmd: bash -c "$RUNNER-compose -f database.yml up -d"
+    cmds:
+      - bash -c "$RUNNER-compose -f database.yml up -d"
+      - task: migrate
 
   database-down:
     desc: Drop the database container throw docker or podman.
@@ -35,31 +42,25 @@ tasks:
 
   migrate:
     desc: Installs and runs alembic migrations engine
-    deps: [database-up]
     aliases: [m, mg]
-    cmds:
-      - pip install alembic
-      - alembic upgrade head
+    cmd: alembic upgrade head
 
   lint:
     desc: Installs and runs ruff linter
-    cmds:
-      - pip install ruff
-      - ruff check
+    cmd: ruff check
 
   format:
     desc: Auto formatting python code with ruff
     aliases: [f, fmt]
-    cmds:
-      - pip install ruff
-      - ruff format
+    cmd: ruff format
 
   test:
     desc: Run all tests
-    cmds:
-      - python -m unittest discover
+    cmd: python -m unittest discover
 
   generate-requirements:
     desc: Generate requirements.txt file for Docker containers
     aliases: [req]
-    cmd: pip freeze > requirements.txt
+    cmds:
+      - pip freeze > requirements.txt
+      - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
