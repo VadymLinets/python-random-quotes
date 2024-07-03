@@ -1,6 +1,6 @@
+import random
 from abc import ABCMeta
 from src.config.config import QuotesConfig
-import random
 
 
 class DBInterface(metaclass=ABCMeta):
@@ -81,20 +81,15 @@ class Service:
         if (100.0 - self.cfg.random_quote_chance) > random_percent and len(quotes) > 0:
             likes: float = 0.0
             for quote in quotes:
-                if quote.likes == 0:
-                    quote.likes += 1
-
-                likes += quote.likes
+                likes += quote.likes if quote.likes > 0 else 1
 
             accumulator: float = 0.0
             delimiter: float = likes * 100.0 / (100.0 - self.cfg.random_quote_chance)
-            for i, quote in enumerate(quotes):
-                if quote.likes == 0:
-                    quote.likes += 1
-
-                percent = quote.likes / delimiter * 100.0
+            for quote in quotes:
+                likes = quote.likes if quote.likes > 0 else 1
+                percent = likes / delimiter * 100.0
                 if percent + accumulator >= random_percent:
-                    return quotes[i]
+                    return quote
 
                 accumulator += percent
 

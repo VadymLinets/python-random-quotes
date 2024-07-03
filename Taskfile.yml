@@ -56,7 +56,7 @@ tasks:
 
   test:
     desc: Run all tests
-    cmd: python -m unittest discover
+    cmd: pytest
 
   generate-requirements:
     desc: Generate requirements.txt file for Docker containers
