@@ -1,6 +1,5 @@
 from abc import ABCMeta
-import httpx
-import json
+import requests
 
 random_quote_url = "https://api.quotable.io/random"
 
@@ -21,8 +20,8 @@ class Service:
         self.db = db
 
     def get_random_quote(self):
-        r = httpx.get(random_quote_url)
-        random_quote = json.loads(r.text)
+        resp = requests.get(random_quote_url)
+        random_quote = resp.json()
         quote = Quote(
             id=random_quote["_id"],
             quote=random_quote["content"],
