@@ -160,3 +160,7 @@ cython_debug/
 # IDE config files
 .fleet
 .idea
+
+# mutation tests files
+mutation/*.sqlite
+mutation/reports/*.html

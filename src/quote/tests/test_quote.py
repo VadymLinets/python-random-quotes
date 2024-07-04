@@ -81,6 +81,14 @@ def test_like_quote_already_liked(mocker, view):
     assert srv.like_quote(quote_id=view.quote_id, user_id=view.user_id) is None
 
 
+def test_like_quote_no_view(mocker, view):
+    db = sqlalchemy.Postgres(cfg.PostgresConfig())
+    mocker.patch.object(db, "get_view", return_value=None)
+
+    srv = quote_srv.Service(None, db, None)
+    assert srv.like_quote(quote_id=view.quote_id, user_id=view.user_id) is None
+
+
 def test_get_same_quote_success(mocker, quote, user_id):
     db = sqlalchemy.Postgres(cfg.PostgresConfig())
     mocker.patch.object(db, "get_quote", return_value=quote)

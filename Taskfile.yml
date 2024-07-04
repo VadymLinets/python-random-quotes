@@ -65,3 +65,12 @@ tasks:
     cmds:
       - pip freeze > requirements.txt
       - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
+
+  mutation-tests:
+    desc: Run mutation testing
+    dir: "{{.USER_WORKING_DIR}}/mutation"
+    aliases: [mut]
+    cmds:
+      - cosmic-ray init quote.toml quote.sqlite
+      - cosmic-ray exec quote.toml quote.sqlite
+      - cr-html quote.sqlite > reports/quote.html
