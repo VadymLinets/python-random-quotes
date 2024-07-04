@@ -23,15 +23,18 @@ class Service:
 
     def like_quote(self, user_id: str, quote_id: str) -> None:
         view = self.db.get_view(quote_id, user_id)
-        if view.liked:
+        if view is None or view.liked:
             return
         self.db.like_quote(quote_id)
         self.db.mark_as_liked(quote_id, user_id)
 
     def get_same_quote(self, user_id: str, quote_id: str) -> Quote:
         viewed_quote = self.db.get_quote(quote_id)
-        quote = self.db.get_same_quote(user_id, viewed_quote)
-        if quote is None:
+        if viewed_quote is not None:
+            quote = self.db.get_same_quote(user_id, viewed_quote)
+            if quote is None:
+                quote = self.api.get_random_quote()
+        else:
             quote = self.api.get_random_quote()
         self.db.mark_as_viewed(quote.id, user_id)
         return Quote(
