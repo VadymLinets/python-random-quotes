@@ -1,4 +1,5 @@
 import random
+
 from src.config.config import QuotesConfig
 from src.quote.interfaces import DBInterface, APIInterface, Quote
 

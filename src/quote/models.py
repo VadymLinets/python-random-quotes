@@ -14,6 +14,15 @@ class Quote:
         self.tags = tags
         self.likes = likes
 
+    def __eq__(self, other) -> bool:
+        return (
+            self.id == other.id
+            and self.quote == other.quote
+            and self.author == other.author
+            and self.tags == other.tags
+            and self.likes == other.likes
+        )
+
 
 class View:
     quote_id: str

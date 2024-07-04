@@ -13,11 +13,7 @@ import src.heartbeat.heartbeat as heartbeat
 import src.quote_api.api as api
 import src.quote.quote as quote_srv
 import src.server.fastapi as fastapi_handlers
-
-
-class Quote:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
+from src.quote.models import Quote
 
 
 class TestIntegration:
@@ -30,7 +26,6 @@ class TestIntegration:
             quote=self.fake.sentence(nb_words=20, variable_nb_words=True),
             author=self.fake.name(),
             tags=[self.fake.color(), self.fake.color()],
-            likes=0,
         )
 
     @pytest.fixture
@@ -81,16 +76,7 @@ class TestIntegration:
         assert response.json() == quote.__dict__
 
         db_quote = self.db.get_quote(quote.id)
-        assert (
-            quote.__dict__
-            == Quote(
-                id=db_quote.id,
-                quote=db_quote.quote,
-                author=db_quote.author,
-                tags=db_quote.tags,
-                likes=db_quote.likes,
-            ).__dict__
-        )
+        assert quote == db_quote
 
     def test_like_quote(self, quote, user_id):
         self.db.mark_as_viewed(quote_id=quote.id, user_id=user_id)

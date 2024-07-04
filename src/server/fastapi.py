@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from src.quote.quote import Service as quote_srv
 from src.heartbeat.heartbeat import Service as heartbeat_srv
 
