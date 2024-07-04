@@ -94,7 +94,6 @@ class TestIntegration:
             quote=self.fake.sentence(nb_words=20, variable_nb_words=True),
             author=quote.author,
             tags=quote.tags,
-            likes=0,
         )
 
         random_quote = Quote(
@@ -102,7 +101,6 @@ class TestIntegration:
             quote=self.fake.sentence(nb_words=20, variable_nb_words=True),
             author=self.fake.name(),
             tags=[self.fake.color(), self.fake.color()],
-            likes=0,
         )
 
         self.db.save_quote(same_quote)
