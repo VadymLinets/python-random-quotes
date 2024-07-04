@@ -22,7 +22,7 @@ class PostgresConfig(BaseSettings):
 
 
 class QuotesConfig(BaseSettings):
-    random_quote_chance: float = Field(20.0, alias="RANDOM_QUOTE_CHANCE")
+    random_quote_chance: float = Field(alias="RANDOM_QUOTE_CHANCE", default=20.0)
 
     model_config = SettingsConfigDict(
         env_file=".env",
