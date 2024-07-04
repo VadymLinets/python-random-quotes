@@ -1,7 +1,6 @@
 import pytest
 import os
 import subprocess
-
 from faker import Faker
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
