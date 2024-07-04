@@ -59,18 +59,19 @@ tasks:
     desc: Run all tests
     cmd: pytest -vv
 
-  generate-requirements:
-    desc: Generate requirements.txt file for Docker containers
-    aliases: [req]
-    cmds:
-      - pip freeze > requirements.txt
-      - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
-
   mutation-tests:
     desc: Run mutation testing
+    deps: [test]
     dir: "{{.USER_WORKING_DIR}}/mutation"
     aliases: [mut]
     cmds:
       - cosmic-ray init quote.toml quote.sqlite
       - cosmic-ray exec quote.toml quote.sqlite
       - cr-html quote.sqlite > reports/quote.html
+
+  generate-requirements:
+    desc: Generate requirements.txt file for Docker containers
+    aliases: [req]
+    cmds:
+      - pip freeze > requirements.txt
+      - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
