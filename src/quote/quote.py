@@ -3,6 +3,8 @@ import random
 from src.config.config import QuotesConfig
 from src.quote.interfaces import DBInterface, APIInterface, Quote
 
+ONE_HUNDRED_PERCENT: float = 100.0
+
 
 class Service:
     def __init__(self, cfg: QuotesConfig, db: DBInterface, api: APIInterface):
@@ -12,7 +14,7 @@ class Service:
 
     def get_quote(self, user_id: str) -> Quote:
         quotes = self.db.get_quotes(user_id)
-        quote = self.__getQuote(quotes)
+        quote = self.choose_quote(quotes, random.uniform(0.0, ONE_HUNDRED_PERCENT))
         self.db.mark_as_viewed(quote.id, user_id)
         return Quote(
             id=quote.id,
@@ -46,18 +48,19 @@ class Service:
             likes=quote.likes,
         )
 
-    def __getQuote(self, quotes: list[Quote] = []) -> Quote:
-        random_percent = random.uniform(0.0, 100.0)
-        if (100.0 - self.cfg.random_quote_chance) > random_percent and len(quotes) > 0:
+    def choose_quote(
+        self, quotes: list[Quote] = [], random_percent: float = 0.0
+    ) -> Quote:
+        if (ONE_HUNDRED_PERCENT - self.cfg.random_quote_chance) > random_percent and len(quotes) > 0:
             likes: float = 0.0
             for quote in quotes:
                 likes += quote.likes if quote.likes > 0 else 1
 
             accumulator: float = 0.0
-            delimiter: float = likes * 100.0 / (100.0 - self.cfg.random_quote_chance)
+            delimiter: float = likes * ONE_HUNDRED_PERCENT / (ONE_HUNDRED_PERCENT - self.cfg.random_quote_chance)
             for quote in quotes:
                 likes = quote.likes if quote.likes > 0 else 1
-                percent = likes / delimiter * 100.0
+                percent = likes / delimiter * ONE_HUNDRED_PERCENT
                 if percent + accumulator >= random_percent:
                     return quote
 

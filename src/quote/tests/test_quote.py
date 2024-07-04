@@ -110,3 +110,94 @@ def test_get_same_quote_random(mocker, quote, user_id):
 
     srv = quote_srv.Service(None, db, api)
     assert quote == srv.get_same_quote(user_id=user_id, quote_id=quote.id)
+
+
+def test_choose_quote_success():
+    quote_1 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+        likes=10,
+    )
+
+    quote_2 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+        likes=90,
+    )
+
+    quote_cfg = cfg.QuotesConfig()
+    quote_cfg.random_quote_chance = 0.0
+    srv = quote_srv.Service(quote_cfg, None, None)
+    assert quote_1 == srv.choose_quote([quote_1, quote_2], 10.0)
+    assert quote_2 == srv.choose_quote([quote_1, quote_2], 11.0)
+
+
+def test_choose_quote_zero_likes():
+    quote_1 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+    )
+
+    quote_2 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+    )
+
+    quote_cfg = cfg.QuotesConfig()
+    quote_cfg.random_quote_chance = 0.0
+    srv = quote_srv.Service(quote_cfg, None, None)
+    assert quote_1 == srv.choose_quote(quotes=[quote_1, quote_2])
+    assert quote_2 == srv.choose_quote([quote_1, quote_2], 51.0)
+
+
+def test_choose_quote_random(mocker, quote):
+    quote_1 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+        likes=1,
+    )
+
+    quote_2 = Quote(
+        id=fake.uuid4(cast_to=str),
+        quote=fake.sentence(nb_words=20, variable_nb_words=True),
+        author=fake.name(),
+        tags=fake.get_words_list(),
+        likes=1,
+    )
+
+    api = quote_api_srv.Service(None)
+    mocker.patch.object(api, "get_random_quote", return_value=quote)
+
+    quote_cfg = cfg.QuotesConfig()
+    quote_cfg.random_quote_chance = 1.0
+    srv = quote_srv.Service(quote_cfg, None, api)
+    assert quote == srv.choose_quote([quote_1, quote_2], 99.0)
+    assert quote_2 == srv.choose_quote([quote_1, quote_2], 98.0)
+    assert quote_1 == srv.choose_quote([quote_1, quote_2], 21.0)
+
+    quote_cfg.random_quote_chance = 98.0
+    srv = quote_srv.Service(quote_cfg, None, api)
+    assert quote == srv.choose_quote([quote_1, quote_2], 60.0)
+    assert quote_2 == srv.choose_quote([quote_1, quote_2], 1.9)
+    assert quote_1 == srv.choose_quote([quote_1, quote_2], 0.0)
+
+
+def test_choose_quote_empty_list(mocker, quote):
+    api = quote_api_srv.Service(None)
+    mocker.patch.object(api, "get_random_quote", return_value=quote)
+
+    quote_cfg = cfg.QuotesConfig()
+    quote_cfg.random_quote_chance = 80.0
+    srv = quote_srv.Service(quote_cfg, None, api)
+    assert quote == srv.choose_quote([], 19.0)
+    assert quote == srv.choose_quote()
