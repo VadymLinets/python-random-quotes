@@ -1,40 +1,6 @@
 import random
-from abc import ABCMeta
 from src.config.config import QuotesConfig
-
-
-class DBInterface(metaclass=ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return (
-            hasattr(subclass, "get_quote")
-            and callable(subclass.get_quote)
-            and hasattr(subclass, "get_quotes")
-            and callable(subclass.get_quotes)
-            and hasattr(subclass, "get_same_quote")
-            and callable(subclass.get_same_quote)
-            and hasattr(subclass, "get_view")
-            and callable(subclass.get_view)
-            and hasattr(subclass, "mark_as_viewed")
-            and callable(subclass.mark_as_viewed)
-            and hasattr(subclass, "mark_as_liked")
-            and callable(subclass.mark_as_liked)
-            and hasattr(subclass, "like_quote")
-            and callable(subclass.like_quote)
-        )
-
-
-class APIInterface(metaclass=ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return hasattr(subclass, "get_random_quote") and callable(
-            subclass.get_random_quote
-        )
-
-
-class Quote:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
+from src.quote.interfaces import DBInterface, APIInterface, Quote
 
 
 class Service:
@@ -43,7 +9,7 @@ class Service:
         self.db = db
         self.api = api
 
-    def get_quote(self, user_id: str):
+    def get_quote(self, user_id: str) -> Quote:
         quotes = self.db.get_quotes(user_id)
         quote = self.__getQuote(quotes)
         self.db.mark_as_viewed(quote.id, user_id)
@@ -55,14 +21,14 @@ class Service:
             likes=quote.likes,
         )
 
-    def like_quote(self, user_id: str, quote_id: str):
+    def like_quote(self, user_id: str, quote_id: str) -> None:
         view = self.db.get_view(quote_id, user_id)
         if view.liked:
             return
         self.db.like_quote(quote_id)
         self.db.mark_as_liked(quote_id, user_id)
 
-    def get_same_quote(self, user_id: str, quote_id: str):
+    def get_same_quote(self, user_id: str, quote_id: str) -> Quote:
         viewed_quote = self.db.get_quote(quote_id)
         quote = self.db.get_same_quote(user_id, viewed_quote)
         if quote is None:
@@ -76,7 +42,7 @@ class Service:
             likes=quote.likes,
         )
 
-    def __getQuote(self, quotes=[]):
+    def __getQuote(self, quotes: list[Quote] = []) -> Quote:
         random_percent = random.uniform(0.0, 100.0)
         if (100.0 - self.cfg.random_quote_chance) > random_percent and len(quotes) > 0:
             likes: float = 0.0

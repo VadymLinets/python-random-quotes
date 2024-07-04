@@ -11,7 +11,11 @@ from sqlalchemy import text
 from sqlalchemy import case
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.types import ARRAY
+
 from src.config.config import PostgresConfig
+from src.quote.interfaces import DBInterface as quote_db
+from src.quote_api.interfaces import DBInterface as quote_api_db
+from src.heartbeat.interfaces import DBInterface as heartbeat_db
 
 
 class Base(DeclarativeBase):
@@ -42,30 +46,38 @@ class View(Base):
         return f"View(quote_id={self.quote_id!r}, user_id={self.user_id!r}, liked={self.liked!r})"
 
 
-class Postgres:
+class Postgres(quote_db, quote_api_db, heartbeat_db):
     def __init__(self, cfg: PostgresConfig):
         self.engine = create_engine(cfg.dsn, echo=True)
 
-    def ping(self):
+    def ping(self) -> None:
         with self.engine.connect() as conn:
             conn.execute(text("SELECT 1"))
 
-    def get_quote(self, quote_id: str):
+    def get_quote(self, quote_id: str) -> Quote:
         with Session(self.engine) as session:
             return session.scalar(select(Quote).where(Quote.id == quote_id))
 
-    def get_quotes(self, user_id: str):
-        viewed = select(View.quote_id).where(View.user_id == user_id).subquery()
+    def get_quotes(self, user_id: str) -> list[Quote]:
         with Session(self.engine) as session:
-            return session.scalars(select(Quote).where(Quote.id.not_in(viewed))).all()
+            return session.scalars(
+                select(Quote).where(
+                    Quote.id.not_in(
+                        select(View.quote_id).where(View.user_id == user_id)
+                    )
+                )
+            ).all()
 
-    def get_same_quote(self, user_id: str, viewed_quote: Quote):
-        viewed = select(View.quote_id).where(View.user_id == user_id).subquery()
+    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote:
         tags = "'" + "', '".join(viewed_quote.tags) + "'"
         with Session(self.engine) as session:
             return session.scalars(
                 select(Quote)
-                .where(Quote.id.not_in(viewed))
+                .where(
+                    Quote.id.not_in(
+                        select(View.quote_id).where(View.user_id == user_id)
+                    )
+                )
                 .order_by(
                     text(
                         "cardinality(array(select unnest(quotes.tags) intersect select unnest(array["
@@ -78,13 +90,13 @@ class Postgres:
                 .limit(1)
             ).first()
 
-    def get_view(self, quote_id: str, user_id: str):
+    def get_view(self, quote_id: str, user_id: str) -> View:
         with Session(self.engine) as session:
             return session.scalar(
                 select(View).where(View.user_id == user_id, View.quote_id == quote_id)
             )
 
-    def save_quote(self, quote: Quote):
+    def save_quote(self, quote: Quote) -> None:
         with Session(self.engine) as session:
             session.execute(
                 insert(Quote)
@@ -99,7 +111,7 @@ class Postgres:
             )
             session.commit()
 
-    def mark_as_viewed(self, quote_id: str, user_id: str):
+    def mark_as_viewed(self, quote_id: str, user_id: str) -> None:
         with Session(self.engine) as session:
             session.execute(
                 insert(View)
@@ -112,7 +124,7 @@ class Postgres:
             )
             session.commit()
 
-    def mark_as_liked(self, quote_id: str, user_id: str):
+    def mark_as_liked(self, quote_id: str, user_id: str) -> None:
         with Session(self.engine) as session:
             session.query(View).filter(
                 View.user_id == user_id,
@@ -120,7 +132,7 @@ class Postgres:
             ).update({View.liked: True})
             session.commit()
 
-    def like_quote(self, quote_id: str):
+    def like_quote(self, quote_id: str) -> None:
         with Session(self.engine) as session:
             session.query(Quote).filter(Quote.id == quote_id).update(
                 {Quote.likes: Quote.likes + 1}

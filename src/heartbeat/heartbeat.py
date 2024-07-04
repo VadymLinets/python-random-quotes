@@ -1,15 +1,9 @@
-from abc import ABCMeta
-
-
-class DBInterface(metaclass=ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return hasattr(subclass, "ping") and callable(subclass.ping)
+from src.heartbeat.interfaces import DBInterface
 
 
 class Service:
     def __init__(self, db: DBInterface):
         self.db = db
 
-    def ping_database(self):
+    def ping_database(self) -> None:
         self.db.ping()

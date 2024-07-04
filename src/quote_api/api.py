@@ -1,25 +1,16 @@
-from abc import ABCMeta
 import requests
+
+from src.quote.interfaces import APIInterface
+from src.quote_api.interfaces import DBInterface, Quote
 
 random_quote_url = "https://api.quotable.io/random"
 
 
-class DBInterface(metaclass=ABCMeta):
-    @classmethod
-    def __subclasshook__(cls, subclass):
-        return hasattr(subclass, "save_quote") and callable(subclass.save_quote)
-
-
-class Quote:
-    def __init__(self, **entries):
-        self.__dict__.update(entries)
-
-
-class Service:
+class Service(APIInterface):
     def __init__(self, db: DBInterface):
         self.db = db
 
-    def get_random_quote(self):
+    def get_random_quote(self) -> Quote:
         resp = requests.get(random_quote_url)
         random_quote = resp.json()
         quote = Quote(
@@ -27,7 +18,6 @@ class Service:
             quote=random_quote["content"],
             author=random_quote["author"],
             tags=random_quote["tags"],
-            likes=0,
         )
         self.db.save_quote(quote)
         return quote
