@@ -48,7 +48,7 @@ class View(Base):
 
 class Postgres(quote_db, quote_api_db, heartbeat_db):
     def __init__(self, cfg: PostgresConfig):
-        self.engine = create_engine(cfg.dsn, echo=True)
+        self.engine = create_engine(cfg.dsn)
 
     def ping(self) -> None:
         with self.engine.connect() as conn:
