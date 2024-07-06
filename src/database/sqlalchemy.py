@@ -1,3 +1,4 @@
+from typing import Sequence
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -32,7 +33,7 @@ class Quote(Base):
     likes: Mapped[int]
 
     def __repr__(self) -> str:
-        return f"Quote(id={self.id!r}, quote={self.quote!r}, author={self.author!r}, tags={self.tags!r}, likes={self.likes!r})"
+        return f"Quote(id={self.id!r}, quote={self.quote!r}, author={self.author!r}, tags={self.tags!r})"
 
 
 class View(Base):
@@ -58,7 +59,7 @@ class Postgres(quote_db, quote_api_db, heartbeat_db):
         with Session(self.engine) as session:
             return session.scalar(select(Quote).where(Quote.id == quote_id))
 
-    def get_quotes(self, user_id: str) -> list[Quote]:
+    def get_quotes(self, user_id: str) -> Sequence[Quote]:
         with Session(self.engine) as session:
             return session.scalars(
                 select(Quote).where(

@@ -61,7 +61,7 @@ class Postgres(quote_db, quote_api_db, heartbeat_db):
             Quote.id.not_in(View.select(View.quote_id).where(View.user_id == user_id))
         )
 
-    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote:
+    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote | None:
         tags = "'" + "', '".join(viewed_quote.tags) + "'"
         try:
             return (

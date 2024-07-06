@@ -49,7 +49,7 @@ class Service:
         )
 
     def choose_quote(
-        self, quotes: list[Quote] = [], random_percent: float = 0.0
+        self, quotes: list[Quote], random_percent: float = 0.0
     ) -> Quote:
         if (ONE_HUNDRED_PERCENT - self.cfg.random_quote_chance) > random_percent and len(quotes) > 0:
             likes: float = 0.0
