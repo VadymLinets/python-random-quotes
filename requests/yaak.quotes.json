@@ -1,0 +1,98 @@
+{
+  "yaakVersion": "2024.6.6",
+  "yaakSchema": 2,
+  "timestamp": "2024-07-06T20:44:21.513177708",
+  "resources": {
+    "workspaces": [
+      {
+        "id": "wk_yxwTAXxlR9",
+        "model": "workspace",
+        "createdAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-03T15:36:25",
+        "name": "Quotes",
+        "description": "",
+        "variables": [],
+        "settingValidateCertificates": true,
+        "settingFollowRedirects": true,
+        "settingRequestTimeout": 0
+      }
+    ],
+    "environments": [],
+    "folders": [],
+    "httpRequests": [
+      {
+        "createdAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-03T15:36:25",
+        "id": "rq_COewOhDgc6",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 0.0,
+        "name": "Heartbeat",
+        "url": "http://0.0.0.0:1140/heartbeat",
+        "urlParameters": [],
+        "method": "GET",
+        "body": {},
+        "bodyType": null,
+        "authentication": {},
+        "authenticationType": null,
+        "headers": []
+      },
+      {
+        "createdAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-04T15:27:59",
+        "id": "rq_17hY3aNV1y",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 0.0,
+        "name": "Get random quote",
+        "url": "http://0.0.0.0:1140/?user_id=1",
+        "urlParameters": [],
+        "method": "GET",
+        "body": {},
+        "bodyType": null,
+        "authentication": {},
+        "authenticationType": null,
+        "headers": []
+      },
+      {
+        "createdAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-04T15:27:56",
+        "id": "rq_ZlSXNuel6L",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 0.0,
+        "name": "Like quote",
+        "url": "http://0.0.0.0:1140/like?user_id=1&quote_id=3iDLeeC2HaT1",
+        "urlParameters": [],
+        "method": "PATCH",
+        "body": {},
+        "bodyType": null,
+        "authentication": {},
+        "authenticationType": null,
+        "headers": []
+      },
+      {
+        "createdAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-04T15:27:51",
+        "id": "rq_08SNYw6kED",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 0.0,
+        "name": "Get same quote",
+        "url": "http://0.0.0.0:1140/same?user_id=1&quote_id=3iDLeeC2HaT1",
+        "urlParameters": [],
+        "method": "GET",
+        "body": {},
+        "bodyType": null,
+        "authentication": {},
+        "authenticationType": null,
+        "headers": []
+      }
+    ],
+    "grpcRequests": []
+  }
+}
