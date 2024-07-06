@@ -27,12 +27,12 @@ tasks:
     cmd: bash -c "$RUNNER-compose -f service.yml down"
 
   database-up:
-    desc: Create the database container throw docker or podman.
+    desc: Create the database container throw docker or podman and run migrations.
     dir: "{{.USER_WORKING_DIR}}/containers"
     aliases: [db]
     cmds:
       - bash -c "$RUNNER-compose -f database.yml up -d"
-      - sleep 1
+      - sleep 2
       - task: migrate
 
   database-down:
