@@ -15,7 +15,7 @@ fake = Faker()
 @pytest.fixture
 def quote():
     return Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
@@ -106,7 +106,7 @@ def test_get_same_quote_random(mocker, quote, user_id):
 
 def test_choose_quote_success():
     quote_1 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
@@ -114,7 +114,7 @@ def test_choose_quote_success():
     )
 
     quote_2 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
@@ -130,14 +130,14 @@ def test_choose_quote_success():
 
 def test_choose_quote_zero_likes():
     quote_1 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
     )
 
     quote_2 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
@@ -152,7 +152,7 @@ def test_choose_quote_zero_likes():
 
 def test_choose_quote_random(mocker, quote):
     quote_1 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),
@@ -160,7 +160,7 @@ def test_choose_quote_random(mocker, quote):
     )
 
     quote_2 = Quote(
-        id=fake.uuid4(cast_to=str),
+        quote_id=fake.uuid4(cast_to=str),
         quote=fake.sentence(nb_words=20, variable_nb_words=True),
         author=fake.name(),
         tags=fake.get_words_list(),

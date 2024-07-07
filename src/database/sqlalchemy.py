@@ -14,9 +14,9 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.types import ARRAY
 
 from src.config.config import PostgresConfig
-from src.quote.interfaces import DBInterface as quote_db
-from src.quote_api.interfaces import DBInterface as quote_api_db
-from src.heartbeat.interfaces import DBInterface as heartbeat_db
+from src.quote.interfaces import DBInterface as QuoteDB
+from src.quote_api.interfaces import DBInterface as QuoteApiDB
+from src.heartbeat.interfaces import DBInterface as HeartbeatDB
 
 
 class Base(DeclarativeBase):
@@ -47,7 +47,7 @@ class View(Base):
         return f"View(quote_id={self.quote_id!r}, user_id={self.user_id!r}, liked={self.liked!r})"
 
 
-class Postgres(quote_db, quote_api_db, heartbeat_db):
+class Postgres(QuoteDB, QuoteApiDB, HeartbeatDB):
     def __init__(self, cfg: PostgresConfig):
         self.engine = create_engine(cfg.dsn)
 

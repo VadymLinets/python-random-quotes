@@ -13,9 +13,9 @@ import playhouse.postgres_ext as pg
 from playhouse.db_url import connect
 
 from src.config.config import PostgresConfig
-from src.quote.interfaces import DBInterface as quote_db
-from src.quote_api.interfaces import DBInterface as quote_api_db
-from src.heartbeat.interfaces import DBInterface as heartbeat_db
+from src.quote.interfaces import DBInterface as QuoteDB
+from src.quote_api.interfaces import DBInterface as QuoteApiDB
+from src.heartbeat.interfaces import DBInterface as HeartbeatDB
 
 db = DatabaseProxy()
 
@@ -46,7 +46,7 @@ class View(BaseModel):
         primary_key = CompositeKey("user_id", "quote_id")
 
 
-class Postgres(quote_db, quote_api_db, heartbeat_db):
+class Postgres(QuoteDB, QuoteApiDB, HeartbeatDB):
     def __init__(self, cfg: PostgresConfig):
         db.initialize(connect(cfg.dsn))
 

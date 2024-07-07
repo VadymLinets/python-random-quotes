@@ -6,9 +6,9 @@ class Quote:
     likes: int
 
     def __init__(
-        self, id: str, quote: str, author: str, tags: list[str], likes: int = 0
+        self, quote_id: str, quote: str, author: str, tags: list[str], likes: int = 0
     ):
-        self.id = id
+        self.id = quote_id
         self.quote = quote
         self.author = author
         self.tags = tags

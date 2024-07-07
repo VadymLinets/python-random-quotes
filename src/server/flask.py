@@ -1,11 +1,11 @@
 from flask import Blueprint, request
 
-from src.quote.quote import Service as quote_srv
-from src.heartbeat.heartbeat import Service as heartbeat_srv
+from src.quote.quote import Service as QuoteService
+from src.heartbeat.heartbeat import Service as HeartbeatService
 
 
 class Handlers:
-    def __init__(self, quotes: quote_srv, heartbeat: heartbeat_srv):
+    def __init__(self, quotes: QuoteService, heartbeat: HeartbeatService):
         self.quotes = quotes
         self.heartbeat = heartbeat
 
