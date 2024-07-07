@@ -75,3 +75,12 @@ tasks:
     cmds:
       - pip freeze > requirements.txt
       - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
+
+  upgrade-requirements:
+    desc: Upgrades all libraries from requirements.txt file
+    deps: [generate-requirements]
+    aliases: [upgr]
+    cmds:
+      - sed -i 's/==/>=/g' requirements.txt
+      - pip install -r requirements.txt --upgrade
+      - task: generate-requirements
