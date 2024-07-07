@@ -1,13 +1,12 @@
 import pytest
 import responses
-
 import sys
-
-sys.path.append("../../../src")
 
 import src.quote_api.api as quote_api_srv
 import src.config.config as cfg
 import src.database.sqlalchemy as sqlalchemy
+
+sys.path.append("../../../src")
 
 
 @pytest.fixture
