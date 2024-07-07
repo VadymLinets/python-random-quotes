@@ -69,7 +69,7 @@ class Postgres(quote_db, quote_api_db, heartbeat_db):
                 )
             ).all()
 
-    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote:
+    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote | None:
         tags = "'" + "', '".join(viewed_quote.tags) + "'"
         with Session(self.engine) as session:
             return session.scalars(
@@ -91,7 +91,7 @@ class Postgres(quote_db, quote_api_db, heartbeat_db):
                 .limit(1)
             ).first()
 
-    def get_view(self, quote_id: str, user_id: str) -> View:
+    def get_view(self, quote_id: str, user_id: str) -> View | None:
         with Session(self.engine) as session:
             return session.scalar(
                 select(View).where(View.user_id == user_id, View.quote_id == quote_id)

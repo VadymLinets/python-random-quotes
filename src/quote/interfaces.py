@@ -13,11 +13,11 @@ class DBInterface(ABC):
         pass
 
     @abstractmethod
-    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote:
+    def get_same_quote(self, user_id: str, viewed_quote: Quote) -> Quote | None:
         pass
 
     @abstractmethod
-    def get_view(self, quote_id: str, user_id: str) -> View:
+    def get_view(self, quote_id: str, user_id: str) -> View | None:
         pass
 
     @abstractmethod

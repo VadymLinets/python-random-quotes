@@ -86,7 +86,7 @@ class Postgres(quote_db, quote_api_db, heartbeat_db):
         except DoesNotExist:
             return None
 
-    def get_view(self, quote_id: str, user_id: str) -> View:
+    def get_view(self, quote_id: str, user_id: str) -> View | None:
         return View.get_by_id((user_id, quote_id))
 
     def save_quote(self, quote: Quote) -> None:
