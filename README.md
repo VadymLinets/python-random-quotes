@@ -12,13 +12,25 @@ It's a service that shows random quotes, allows to like them and show quote that
 
 ## How to run
 
-1. Copy the [.env.example](.env.example) file to `.env` and change variables to what you need
+1. Create new virtual environment and install deps
+
+   ```shell
+   python -m venv .venv && .venv/bin/pip install -r requirements.txt
+   ```
+
+   Or you can initialize everything with the following taskfile command.
+   In that case, you can skip point 2 and start from point 3:
+   ```shell
+   task init && nano .env
+   ```
+
+2. Copy the [.env.example](.env.example) file to `.env` and change variables to what you need
 
    ```shell
    cp .env.example .env && nano .env
    ```
 
-2. Start the postgres database
+3. Start the postgres database
 
    > **<span style="color:#79b6c9">ⓘ NOTE:</span>** If you're starting the program by running the taskfile command, you
    can skip this step because db will start up automatically
@@ -28,23 +40,21 @@ It's a service that shows random quotes, allows to like them and show quote that
    cd containers && docker-compose -f database.yml up -d && cd ..
    ```
 
-   Or
-
+   Or use next taskfile command:
    ```shell
    task db
    ```
 
-3. Run the following command:
+4. Run the following command to start fastapi server:
 
     ```shell
     fastapi dev main.py --host "0.0.0.0" --port 1140
     ```
 
-4. Or you can run the following taskfile command:
-
-    ```shell
-    task run
-    ```
+   Or you can run the following taskfile command:
+   ```shell
+   task run
+   ```
 
 5. Import [postman `Quotes` collection](./requests/Quotes.postman_collection.json) into `Postman` program or [yaak `Quotes` collection](./requests/yaak.quotes.json) into `Yaak` program
 6. Send request throw `Postman` or `Yaak`

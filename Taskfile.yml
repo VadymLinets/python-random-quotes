@@ -8,6 +8,7 @@ tasks:
     cmds:
       - python -m venv .venv
       - .venv/bin/pip install -r requirements.txt
+      - cp .env.example .env
 
   run:
     desc: Run python program. It will also start up the database.
