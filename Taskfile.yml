@@ -3,6 +3,12 @@ version: "3"
 dotenv: [".env"]
 
 tasks:
+  init:
+    desc: creates python virtual environment and installs deps
+    cmds:
+      - python -m venv .venv
+      - .venv/bin/pip install -r requirements.txt
+
   run:
     desc: Run python program. It will also start up the database.
     deps: [database-up]
