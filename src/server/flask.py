@@ -31,7 +31,7 @@ class Handlers:
         mutation = ObjectType("MutationHandler")
         mutation.set_field("like_quote_handler", like_quote_resolver)
 
-        type_defs = load_schema_from_path("schema.graphql")
+        type_defs = load_schema_from_path("graphql/quotes.graphql")
         self.schema = make_executable_schema(
             type_defs, query, mutation, snake_case_fallback_resolvers
         )
