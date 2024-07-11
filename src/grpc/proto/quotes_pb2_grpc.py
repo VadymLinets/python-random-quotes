@@ -39,6 +39,11 @@ class QuotesStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.Heartbeat = channel.unary_unary(
+                '/Quotes/Heartbeat',
+                request_serializer=quotes__pb2.Empty.SerializeToString,
+                response_deserializer=quotes__pb2.Empty.FromString,
+                _registered_method=True)
         self.GetQuoteHandler = channel.unary_unary(
                 '/Quotes/GetQuoteHandler',
                 request_serializer=quotes__pb2.UserIDRequest.SerializeToString,
@@ -58,6 +63,12 @@ class QuotesStub(object):
 
 class QuotesServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def Heartbeat(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def GetQuoteHandler(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -80,6 +91,11 @@ class QuotesServicer(object):
 
 def add_QuotesServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'Heartbeat': grpc.unary_unary_rpc_method_handler(
+                    servicer.Heartbeat,
+                    request_deserializer=quotes__pb2.Empty.FromString,
+                    response_serializer=quotes__pb2.Empty.SerializeToString,
+            ),
             'GetQuoteHandler': grpc.unary_unary_rpc_method_handler(
                     servicer.GetQuoteHandler,
                     request_deserializer=quotes__pb2.UserIDRequest.FromString,
@@ -105,6 +121,33 @@ def add_QuotesServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class Quotes(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def Heartbeat(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/Quotes/Heartbeat',
+            quotes__pb2.Empty.SerializeToString,
+            quotes__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
 
     @staticmethod
     def GetQuoteHandler(request,

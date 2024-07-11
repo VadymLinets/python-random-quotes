@@ -39,7 +39,9 @@ elif server_config.server == "flask":
     app.register_blueprint(h.router)
 elif server_config.server == "grpc":
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    add_QuotesServicer_to_server(grpc_server.GRPCServer(quotes_service), server)
+    add_QuotesServicer_to_server(
+        grpc_server.GRPCServer(quotes_service, heartbeat_service), server
+    )
     SERVICE_NAMES = (
         quotes_pb2.DESCRIPTOR.services_by_name["Quotes"].full_name,
         reflection.SERVICE_NAME,

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 service Quotes {
+  rpc Heartbeat(Empty) returns (Empty) {}
   rpc GetQuoteHandler (UserIDRequest) returns (Quote) {}
   rpc GetSameQuoteHandler (UserAndQuoteIDRequest) returns (Quote) {}
   rpc LikeQuoteHandler (UserAndQuoteIDRequest) returns (Empty) {}

@@ -6,11 +6,21 @@ from google.rpc import code_pb2
 from src.grpc.proto.quotes_pb2 import Quote, Empty
 from src.grpc.proto.quotes_pb2_grpc import QuotesServicer
 from src.quote.quote import Service as QuoteService
+from src.heartbeat.heartbeat import Service as HeartbeatService
 
 
 class GRPCServer(QuotesServicer):
-    def __init__(self, quotes: QuoteService):
+    def __init__(self, quotes: QuoteService, heartbeat: HeartbeatService):
         self.quotes = quotes
+        self.heartbeat = heartbeat
+
+    def Heartbeat(self, request, context):
+        try:
+            self.heartbeat.ping_database()
+            return Empty()
+        except Exception as e:
+            logging.error("Failed to get quote", exc_info=e)
+            context.abort_with_status(self.__internal_error("Failed to ping database"))
 
     def GetQuoteHandler(self, request, context):
         try:

@@ -1,7 +1,7 @@
 {
   "yaakVersion": "2024.6.6",
   "yaakSchema": 2,
-  "timestamp": "2024-07-11T13:26:59.185631911",
+  "timestamp": "2024-07-11T14:31:51.115807691",
   "resources": {
     "workspaces": [
       {
@@ -141,6 +141,23 @@
         "service": "Quotes",
         "method": "LikeQuoteHandler",
         "message": "{\n  \"quote_id\": \"l0LfTgApB3\",\n  \"user_id\": \"1\"\n}",
+        "authenticationType": null,
+        "authentication": {},
+        "metadata": []
+      },
+      {
+        "id": "gr_TCAQav7pAo",
+        "model": "grpc_request",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "createdAt": "2024-07-11T14:31:06.552",
+        "updatedAt": "2024-07-11T14:31:22",
+        "folderId": null,
+        "name": "",
+        "sortPriority": 0.0001,
+        "url": "localhost:1140",
+        "service": "Quotes",
+        "method": "Heartbeat",
+        "message": "{}",
         "authenticationType": null,
         "authentication": {},
         "metadata": []
