@@ -1,7 +1,7 @@
 {
   "yaakVersion": "2024.6.6",
   "yaakSchema": 2,
-  "timestamp": "2024-07-11T14:31:51.115807691",
+  "timestamp": "2024-07-11T16:46:09.143854528",
   "resources": {
     "workspaces": [
       {
@@ -22,7 +22,7 @@
     "httpRequests": [
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-03T15:36:25",
+        "updatedAt": "2024-07-11T14:52:55",
         "id": "rq_COewOhDgc6",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
@@ -40,12 +40,12 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-04T15:27:59",
+        "updatedAt": "2024-07-11T14:52:55",
         "id": "rq_17hY3aNV1y",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
         "model": "http_request",
-        "sortPriority": 0.0,
+        "sortPriority": 1000.0,
         "name": "Get random quote",
         "url": "http://0.0.0.0:1140/?user_id=1",
         "urlParameters": [],
@@ -58,12 +58,12 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-04T15:27:56",
+        "updatedAt": "2024-07-11T14:52:56",
         "id": "rq_ZlSXNuel6L",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
         "model": "http_request",
-        "sortPriority": 0.0,
+        "sortPriority": 2000.0,
         "name": "Like quote",
         "url": "http://0.0.0.0:1140/like?user_id=1&quote_id=3iDLeeC2HaT1",
         "urlParameters": [],
@@ -76,12 +76,12 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-04T15:27:51",
+        "updatedAt": "2024-07-11T14:52:56",
         "id": "rq_08SNYw6kED",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
         "model": "http_request",
-        "sortPriority": 0.0,
+        "sortPriority": 3000.0,
         "name": "Get same quote",
         "url": "http://0.0.0.0:1140/same?user_id=1&quote_id=3iDLeeC2HaT1",
         "urlParameters": [],
@@ -91,6 +91,110 @@
         "authentication": {},
         "authenticationType": null,
         "headers": []
+      },
+      {
+        "createdAt": "2024-07-11T14:52:53",
+        "updatedAt": "2024-07-11T15:04:46",
+        "id": "rq_TIb9IHjeqn",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 8000.0,
+        "name": "Heartbeat",
+        "url": "http://0.0.0.0:1140/graphql",
+        "urlParameters": [],
+        "method": "POST",
+        "body": {
+          "text": "{\n  \"query\": \"query Heartbeat {\\n  heartbeat {\\n    success\\n    errors\\n  }\\n}\"\n}"
+        },
+        "bodyType": "graphql",
+        "authentication": {},
+        "authenticationType": null,
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "createdAt": "2024-07-11T15:09:36",
+        "updatedAt": "2024-07-11T15:12:15",
+        "id": "rq_shLvsWBO7k",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 8000.0001,
+        "name": "Get random quote",
+        "url": "http://0.0.0.0:1140/graphql",
+        "urlParameters": [],
+        "method": "POST",
+        "body": {
+          "text": "{\n  \"query\": \"query GetRandomQuote {\\n  get_quote_handler(user_id: \\\"1\\\") {\\n    success\\n    errors\\n    quote {\\n      id\\n      quote\\n      author\\n      tags\\n      likes\\n    }\\n  }\\n}\"\n}"
+        },
+        "bodyType": "graphql",
+        "authentication": {},
+        "authenticationType": null,
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "createdAt": "2024-07-11T15:12:02",
+        "updatedAt": "2024-07-11T16:36:39",
+        "id": "rq_9y9MdtIvtU",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 8000.0002,
+        "name": "Like quote",
+        "url": "http://0.0.0.0:1140/graphql",
+        "urlParameters": [],
+        "method": "POST",
+        "body": {
+          "text": "{\n  \"query\": \"mutation LikeQuote {\\n  like_quote_handler(user_id: \\\"1\\\", quote_id: \\\"Ilvlt1O0thk7\\\") {\\n    success\\n    errors\\n  }\\n}\"\n}"
+        },
+        "bodyType": "graphql",
+        "authentication": {},
+        "authenticationType": null,
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      {
+        "createdAt": "2024-07-11T15:13:21",
+        "updatedAt": "2024-07-11T15:14:10",
+        "id": "rq_eIUcrHROpE",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "folderId": null,
+        "model": "http_request",
+        "sortPriority": 8000.000300000001,
+        "name": "Get same quote",
+        "url": "http://0.0.0.0:1140/graphql",
+        "urlParameters": [],
+        "method": "POST",
+        "body": {
+          "text": "{\n  \"query\": \"query GetSameQuote {\\n  get_same_quote_handler(user_id: \\\"1\\\", quote_id: \\\"Ilvlt1O0thk7\\\") {\\n    success\\n    errors\\n    quote {\\n      id\\n      quote\\n      author\\n      tags\\n      likes\\n    }\\n  }\\n}\"\n}"
+        },
+        "bodyType": "graphql",
+        "authentication": {},
+        "authenticationType": null,
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ]
       }
     ],
     "grpcRequests": [
@@ -99,10 +203,10 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T11:28:46.477",
-        "updatedAt": "2024-07-11T12:23:14",
+        "updatedAt": "2024-07-11T14:52:56",
         "folderId": null,
         "name": "",
-        "sortPriority": 0.0002,
+        "sortPriority": 5000.0,
         "url": "localhost:1140",
         "service": "Quotes",
         "method": "GetQuoteHandler",
@@ -116,10 +220,10 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T12:22:38.627",
-        "updatedAt": "2024-07-11T12:25:52",
+        "updatedAt": "2024-07-11T14:52:56",
         "folderId": null,
         "name": "",
-        "sortPriority": 0.00030000000000000003,
+        "sortPriority": 6000.0,
         "url": "localhost:1140",
         "service": "Quotes",
         "method": "GetSameQuoteHandler",
@@ -133,10 +237,10 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T12:25:57.484",
-        "updatedAt": "2024-07-11T12:32:07",
+        "updatedAt": "2024-07-11T14:52:56",
         "folderId": null,
         "name": "",
-        "sortPriority": 0.0004,
+        "sortPriority": 7000.0,
         "url": "localhost:1140",
         "service": "Quotes",
         "method": "LikeQuoteHandler",
@@ -150,10 +254,10 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T14:31:06.552",
-        "updatedAt": "2024-07-11T14:31:22",
+        "updatedAt": "2024-07-11T14:52:56",
         "folderId": null,
         "name": "",
-        "sortPriority": 0.0001,
+        "sortPriority": 4000.0,
         "url": "localhost:1140",
         "service": "Quotes",
         "method": "Heartbeat",

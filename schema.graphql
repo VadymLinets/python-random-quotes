@@ -1,0 +1,33 @@
+schema {
+    query: QueryHandler
+    mutation: MutationHandler
+}
+
+type Quote {
+    id: String!
+    quote: String!
+    author: String!
+    tags: [String]!
+    likes: Int!
+}
+
+type QuoteResult {
+    success: Boolean!
+    errors: [String]
+    quote: Quote
+}
+
+type EmptyResult {
+    success: Boolean!
+    errors: [String]
+}
+
+type QueryHandler {
+    heartbeat: EmptyResult!
+    get_quote_handler(user_id: String!): QuoteResult!
+    get_same_quote_handler(user_id: String!, quote_id: String!): QuoteResult!
+}
+
+type MutationHandler {
+    like_quote_handler(user_id: String!, quote_id: String!): EmptyResult!
+}
