@@ -7,5 +7,6 @@ elif [ "$SERVER" == "flask" ]; then
   echo "Starting gunicorn server"
   exec gunicorn -b "0.0.0.0:1140" -w 4 main:app
 else
+  echo "Starting gRPC server"
   exec python main.py
 fi
