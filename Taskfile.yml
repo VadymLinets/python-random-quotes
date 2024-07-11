@@ -1,18 +1,19 @@
 version: "3"
 
-dotenv: [".env"]
+dotenv: [ ".env" ]
 
 tasks:
   init:
     desc: Creates python virtual environment and installs deps
     cmds:
       - python -m venv .venv
+      - .venv/bin/pip install --upgrade pip
       - .venv/bin/pip install -r requirements.txt
       - cp .env.example .env
 
   run:
     desc: Run python program. It will also start up the database.
-    deps: [database-up]
+    deps: [ database-up ]
     cmd: |
       if [ $SERVER == "flask" ]; then
         flask --app main run  --host $SERVER_HOST --port $SERVER_PORT
@@ -22,21 +23,21 @@ tasks:
 
   container-run:
     desc: Run application in the docker or podman container. It will also start up the database.
-    deps: [database-up, generate-requirements]
+    deps: [ database-up, generate-requirements ]
     dir: "{{.USER_WORKING_DIR}}/containers"
-    aliases: [crun]
+    aliases: [ crun ]
     cmd: bash -c "$RUNNER-compose -f service.yml up -d --no-deps --build"
 
   container-stop:
     desc: Stop docker or podman container with running application.
     dir: "{{.USER_WORKING_DIR}}/containers"
-    aliases: [cstop]
+    aliases: [ cstop ]
     cmd: bash -c "$RUNNER-compose -f service.yml down"
 
   database-up:
     desc: Create the database container throw docker or podman and run migrations.
     dir: "{{.USER_WORKING_DIR}}/containers"
-    aliases: [db]
+    aliases: [ db ]
     cmds:
       - bash -c "$RUNNER-compose -f database.yml up -d"
       - sleep 2
@@ -45,12 +46,25 @@ tasks:
   database-down:
     desc: Drop the database container throw docker or podman.
     dir: "{{.USER_WORKING_DIR}}/containers"
-    aliases: [dbd]
+    aliases: [ dbd ]
     cmd: bash -c "$RUNNER-compose -f database.yml down"
+
+  generate-proto:
+    desc: Generate protobuf files
+    aliases: [ gp ]
+    cmds:
+      - python -m grpc_tools.protoc -I./proto --python_out=./src/grpc/proto --pyi_out=./src/grpc/proto --grpc_python_out=./src/grpc/proto ./proto/quotes.proto
+      - |
+        for i in $(find "{{.USER_WORKING_DIR}}/src/grpc/proto/" -type f -name "*_grpc.py" | sed "s/ /%SPC%/g"); do 
+          filepath=$(echo "$i" | sed "s/%SPC%/ /g")
+          prefix=$(cut -d '_' -f1 <<< $(basename "$filepath"))
+          sed -i -e "s/import ${prefix}_pb2/from . import ${prefix}_pb2/g" "$filepath"
+        done
+      - ruff check --fix "{{.USER_WORKING_DIR}}/src/grpc/proto/"
 
   migrate:
     desc: Run alembic migrations engine
-    aliases: [m, mg]
+    aliases: [ m, mg ]
     cmd: alembic upgrade head
 
   lint:
@@ -59,7 +73,7 @@ tasks:
 
   format:
     desc: Auto formatting python code with ruff
-    aliases: [f, fmt]
+    aliases: [ f, fmt ]
     cmd: ruff format
 
   test:
@@ -68,9 +82,9 @@ tasks:
 
   mutation-tests:
     desc: Run mutation testing
-    deps: [test]
+    deps: [ test ]
     dir: "{{.USER_WORKING_DIR}}/mutation"
-    aliases: [mut]
+    aliases: [ mut ]
     cmds:
       - cosmic-ray init quote.toml quote.sqlite
       - cosmic-ray exec quote.toml quote.sqlite
@@ -78,16 +92,17 @@ tasks:
 
   generate-requirements:
     desc: Generate requirements.txt file for Docker containers
-    aliases: [req]
+    aliases: [ req ]
     cmds:
       - pip freeze > requirements.txt
       - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
 
   upgrade-requirements:
     desc: Upgrades all libraries from requirements.txt file
-    deps: [generate-requirements]
-    aliases: [upgr]
+    deps: [ generate-requirements ]
+    aliases: [ upgr ]
     cmds:
+      - pip install --upgrade pip
       - sed -i 's/==/>=/g' requirements.txt
       - pip install -r requirements.txt --upgrade
       - task: generate-requirements

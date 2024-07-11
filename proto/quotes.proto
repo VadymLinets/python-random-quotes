@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service Quotes {
+  rpc GetQuoteHandler (UserIDRequest) returns (Quote) {}
+  rpc GetSameQuoteHandler (UserAndQuoteIDRequest) returns (Quote) {}
+  rpc LikeQuoteHandler (UserAndQuoteIDRequest) returns (Empty) {}
+}
+
+message UserIDRequest {
+  string user_id = 1;
+}
+
+message UserAndQuoteIDRequest {
+  string user_id = 1;
+  string quote_id = 2;
+}
+
+message Empty{}
+
+message Quote {
+    string id = 1;
+    string quote = 2;
+    string author = 3;
+    repeated string tags = 4;
+    int64 likes = 5;
+}

@@ -11,6 +11,7 @@ class Config(BaseSettings):
 
 class ServerConfig(Config):
     server: str = Field(alias="SERVER", default="fastapi")
+    grpc_port: int = Field(alias="GRPC_PORT", default=1140)
 
 
 class PostgresConfig(Config):

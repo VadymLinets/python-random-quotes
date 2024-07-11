@@ -1,7 +1,7 @@
 {
   "yaakVersion": "2024.6.6",
   "yaakSchema": 2,
-  "timestamp": "2024-07-06T20:44:21.513177708",
+  "timestamp": "2024-07-11T13:26:59.185631911",
   "resources": {
     "workspaces": [
       {
@@ -93,6 +93,58 @@
         "headers": []
       }
     ],
-    "grpcRequests": []
+    "grpcRequests": [
+      {
+        "id": "gr_fIY2sHGNZ1",
+        "model": "grpc_request",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "createdAt": "2024-07-11T11:28:46.477",
+        "updatedAt": "2024-07-11T12:23:14",
+        "folderId": null,
+        "name": "",
+        "sortPriority": 0.0002,
+        "url": "localhost:1140",
+        "service": "Quotes",
+        "method": "GetQuoteHandler",
+        "message": "{\n  \"user_id\": \"1\"\n}",
+        "authenticationType": null,
+        "authentication": {},
+        "metadata": []
+      },
+      {
+        "id": "gr_ho0vN3DpFZ",
+        "model": "grpc_request",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "createdAt": "2024-07-11T12:22:38.627",
+        "updatedAt": "2024-07-11T12:25:52",
+        "folderId": null,
+        "name": "",
+        "sortPriority": 0.00030000000000000003,
+        "url": "localhost:1140",
+        "service": "Quotes",
+        "method": "GetSameQuoteHandler",
+        "message": "{\n  \"quote_id\": \"l0LfTgApB3\",\n  \"user_id\": \"1\"\n}",
+        "authenticationType": null,
+        "authentication": {},
+        "metadata": []
+      },
+      {
+        "id": "gr_blleGYfJVY",
+        "model": "grpc_request",
+        "workspaceId": "wk_yxwTAXxlR9",
+        "createdAt": "2024-07-11T12:25:57.484",
+        "updatedAt": "2024-07-11T12:32:07",
+        "folderId": null,
+        "name": "",
+        "sortPriority": 0.0004,
+        "url": "localhost:1140",
+        "service": "Quotes",
+        "method": "LikeQuoteHandler",
+        "message": "{\n  \"quote_id\": \"l0LfTgApB3\",\n  \"user_id\": \"1\"\n}",
+        "authenticationType": null,
+        "authentication": {},
+        "metadata": []
+      }
+    ]
   }
 }
