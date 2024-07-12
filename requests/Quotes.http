@@ -1,0 +1,22 @@
+# Quotes
+
+###
+# @name Heartbeat
+GET http://0.0.0.0:1140/heartbeat
+
+###
+# @name Get random quote
+GET http://0.0.0.0:1140/?
+    user_id=1
+
+###
+# @name Like quote
+PATCH http://0.0.0.0:1140/like?
+    user_id=1&
+    quote_id=-LwlAMmYmOG
+
+###
+# @name Get same quote
+GET http://0.0.0.0:1140/same?
+    user_id=1&
+    quote_id=YJVGmtWg9t
