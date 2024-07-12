@@ -12,9 +12,9 @@ import src.quote_api.api as api
 import src.quote.quote as quote_srv
 import src.server.fastapi as fastapi_handlers
 import src.server.flask as flask_handlers
-import src.grpc.grpc as grpc_server
-from src.grpc.proto import quotes_pb2
-from src.grpc.proto.quotes_pb2_grpc import add_QuotesServicer_to_server
+import src.server.grpc as grpc_server
+from src.server.proto import quotes_pb2
+from src.server.proto.quotes_pb2_grpc import add_QuotesServicer_to_server
 
 postgres_config = cfg.PostgresConfig()
 if postgres_config.orm == "sqlalchemy":

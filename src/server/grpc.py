@@ -3,8 +3,8 @@ from grpc_status import rpc_status
 from google.rpc import status_pb2
 from google.rpc import code_pb2
 
-from src.grpc.proto.quotes_pb2 import Quote, Empty
-from src.grpc.proto.quotes_pb2_grpc import QuotesServicer
+from src.server.proto.quotes_pb2 import Quote, Empty
+from src.server.proto.quotes_pb2_grpc import QuotesServicer
 from src.quote.quote import Service as QuoteService
 from src.heartbeat.heartbeat import Service as HeartbeatService
 
@@ -19,7 +19,7 @@ class GRPCServer(QuotesServicer):
             self.heartbeat.ping_database()
             return Empty()
         except Exception as e:
-            logging.error("Failed to get quote", exc_info=e)
+            logging.error("Failed to ping database", exc_info=e)
             context.abort_with_status(self.__internal_error("Failed to ping database"))
 
     def GetQuoteHandler(self, request, context):

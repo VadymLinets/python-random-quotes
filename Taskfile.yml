@@ -53,14 +53,14 @@ tasks:
     desc: Generate protobuf files
     aliases: [ gp ]
     cmds:
-      - python -m grpc_tools.protoc -I./proto --python_out=./src/grpc/proto --pyi_out=./src/grpc/proto --grpc_python_out=./src/grpc/proto ./proto/quotes.proto
+      - python -m grpc_tools.protoc -I./proto --python_out=./src/server/proto --pyi_out=./src/server/proto --grpc_python_out=./src/server/proto ./proto/quotes.proto
       - |
-        for i in $(find "{{.USER_WORKING_DIR}}/src/grpc/proto/" -type f -name "*_grpc.py" | sed "s/ /%SPC%/g"); do 
+        for i in $(find "{{.USER_WORKING_DIR}}/src/server/proto/" -type f -name "*_grpc.py" | sed "s/ /%SPC%/g"); do 
           filepath=$(echo "$i" | sed "s/%SPC%/ /g")
           prefix=$(cut -d '_' -f1 <<< $(basename "$filepath"))
           sed -i -e "s/import ${prefix}_pb2/from . import ${prefix}_pb2/g" "$filepath"
         done
-      - ruff check --fix "{{.USER_WORKING_DIR}}/src/grpc/proto/"
+      - ruff check --fix "{{.USER_WORKING_DIR}}/src/server/proto/"
 
   migrate:
     desc: Run alembic migrations engine
