@@ -16,9 +16,9 @@ tasks:
     deps: [ database-up ]
     cmd: |
       if [ $SERVER == "flask" ]; then
-        flask --app main run  --host $SERVER_HOST --port $SERVER_PORT
+        flask --app app run  --host $SERVER_HOST --port $SERVER_PORT
       elif [ $SERVER == "fastapi" ]; then
-        fastapi dev main.py --host $SERVER_HOST --port $SERVER_PORT
+        fastapi dev app.py --host $SERVER_HOST --port $SERVER_PORT
       elif [ $SERVER == "grpc" ]; then
         python app.py
       elif [ $SERVER == "litestar" ]; then
