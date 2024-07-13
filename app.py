@@ -6,6 +6,7 @@ from litestar import Litestar
 from concurrent import futures
 from grpc_reflection.v1alpha import reflection
 from litestar.di import Provide
+from starlette.applications import Starlette
 
 import src.config.config as cfg
 import src.database.sqlalchemy as sqlalchemy
@@ -16,6 +17,7 @@ import src.quote.quote as quote_srv
 import src.server.fastapi as fastapi_handlers
 import src.server.flask as flask_handlers
 import src.server.litestar as litestar_handlers
+import src.server.starlette as starlette_handlers
 import src.server.grpc as grpc_server
 from src.server.graphql.schema import get_schema
 from src.server.proto import quotes_pb2
@@ -59,6 +61,9 @@ elif server_config.server == "flask":
     app = Flask(__name__)
     h = flask_handlers.Handlers(quotes_service, heartbeat_service)
     app.register_blueprint(h.router)
+elif server_config.server == "starlette":
+    h = starlette_handlers.Handlers(quotes_service, heartbeat_service)
+    app = Starlette(routes=h.routes)
 elif server_config.server == "grpc":
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     quotes = grpc_server.GRPCServer(quotes_service, heartbeat_service)

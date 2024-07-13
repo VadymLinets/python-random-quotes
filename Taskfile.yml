@@ -23,6 +23,8 @@ tasks:
         python app.py
       elif [ $SERVER == "litestar" ]; then
         litestar run -r --host $SERVER_HOST --port $SERVER_PORT
+      elif [ $SERVER == "starlette" ]; then
+        uvicorn --host $SERVER_HOST --port $SERVER_PORT --workers 4 app:app
       fi
 
   container-run:

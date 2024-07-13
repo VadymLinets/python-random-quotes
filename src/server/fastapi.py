@@ -6,19 +6,11 @@ from src.heartbeat.heartbeat import Service as HeartbeatService
 from src.server.graphql.schema import get_schema
 
 
-def get_context_value(request: Request, _data) -> dict:
-    return {
-        "request": request,
-        "heartbeat": request.scope["heartbeat"],
-        "quotes": request.scope["quotes"],
-    }
-
-
 class Handlers:
     def __init__(self, quotes: QuoteService, heartbeat: HeartbeatService):
         self.quotes = quotes
         self.heartbeat = heartbeat
-        self.graphql_app = GraphQL(get_schema(), context_value=get_context_value)
+        self.graphql_app = GraphQL(get_schema(), context_value=self.__get_context_value)
 
         self.router = APIRouter()
         self.router.add_api_route("/", self.get_quote_handler, methods=["GET"])
@@ -27,8 +19,7 @@ class Handlers:
         self.router.add_api_route("/like", self.like_quote_handler, methods=["PATCH"])
 
         self.router.options("/graphql")
-        self.router.add_api_route("/graphql", self.graphql_explorer, methods=["GET"])
-        self.router.add_api_route("/graphql", self.graphql_query, methods=["POST"])
+        self.router.add_api_route("/graphql", self.graphql, methods=["GET", "POST"])
 
     async def get_quote_handler(self, user_id: str):
         return self.quotes.get_quote(user_id)
@@ -42,10 +33,12 @@ class Handlers:
     async def like_quote_handler(self, user_id: str, quote_id: str):
         return self.quotes.like_quote(user_id, quote_id)
 
-    async def graphql_explorer(self, request: Request):
+    async def graphql(self, request: Request):
         return await self.graphql_app.handle_request(request)
 
-    async def graphql_query(self, request: Request):
-        request.scope["heartbeat"] = self.heartbeat
-        request.scope["quotes"] = self.quotes
-        return await self.graphql_app.handle_request(request)
+    def __get_context_value(self, request: Request, _data) -> dict:
+        return {
+            "request": request,
+            "heartbeat": self.heartbeat,
+            "quotes": self.quotes,
+        }
