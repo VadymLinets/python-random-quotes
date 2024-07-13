@@ -17,7 +17,7 @@ class Service:
         quote = self.choose_quote(quotes, random.uniform(0.0, ONE_HUNDRED_PERCENT))
         self.db.mark_as_viewed(quote.id, user_id)
         return Quote(
-            quote_id=quote.id,
+            id=quote.id,
             quote=quote.quote,
             author=quote.author,
             tags=quote.tags,
@@ -41,7 +41,7 @@ class Service:
             quote = self.api.get_random_quote()
         self.db.mark_as_viewed(quote.id, user_id)
         return Quote(
-            quote_id=quote.id,
+            id=quote.id,
             quote=quote.quote,
             author=quote.author,
             tags=quote.tags,

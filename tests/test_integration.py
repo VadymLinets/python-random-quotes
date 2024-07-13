@@ -63,7 +63,7 @@ class TestIntegration:
     @pytest.fixture(scope="module")
     def quote(self) -> Quote:
         return Quote(
-            quote_id=fake.uuid4(cast_to=str),
+            id=fake.uuid4(cast_to=str),
             quote=fake.sentence(nb_words=20, variable_nb_words=True),
             author=fake.name(),
             tags=[fake.color(), fake.color()],
@@ -93,14 +93,14 @@ class TestIntegration:
 
     def test_get_same_quote(self, quote, user_id):
         same_quote = Quote(
-            quote_id=fake.uuid4(cast_to=str),
+            id=fake.uuid4(cast_to=str),
             quote=fake.sentence(nb_words=20, variable_nb_words=True),
             author=quote.author,
             tags=quote.tags,
         )
 
         random_quote = Quote(
-            quote_id=fake.uuid4(cast_to=str),
+            id=fake.uuid4(cast_to=str),
             quote=fake.sentence(nb_words=20, variable_nb_words=True),
             author=fake.name(),
             tags=[fake.color(), fake.color()],

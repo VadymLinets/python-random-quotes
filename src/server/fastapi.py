@@ -1,20 +1,9 @@
 from fastapi import APIRouter, Request
 from ariadne.asgi import GraphQL
-from ariadne import (
-    load_schema_from_path,
-    make_executable_schema,
-    snake_case_fallback_resolvers,
-    ObjectType,
-)
 
 from src.quote.quote import Service as QuoteService
 from src.heartbeat.heartbeat import Service as HeartbeatService
-from src.server.graphql.resolvers import (
-    heartbeat_resolver,
-    get_quote_resolver,
-    get_same_quote_resolver,
-    like_quote_resolver,
-)
+from src.server.graphql.schema import get_schema
 
 
 def get_context_value(request: Request, _data) -> dict:
@@ -29,20 +18,7 @@ class Handlers:
     def __init__(self, quotes: QuoteService, heartbeat: HeartbeatService):
         self.quotes = quotes
         self.heartbeat = heartbeat
-
-        query = ObjectType("QueryHandler")
-        query.set_field("heartbeat", heartbeat_resolver)
-        query.set_field("get_quote_handler", get_quote_resolver)
-        query.set_field("get_same_quote_handler", get_same_quote_resolver)
-
-        mutation = ObjectType("MutationHandler")
-        mutation.set_field("like_quote_handler", like_quote_resolver)
-
-        type_defs = load_schema_from_path("graphql/quotes.graphql")
-        schema = make_executable_schema(
-            type_defs, query, mutation, snake_case_fallback_resolvers
-        )
-        self.graphql_app = GraphQL(schema, context_value=get_context_value)
+        self.graphql_app = GraphQL(get_schema(), context_value=get_context_value)
 
         self.router = APIRouter()
         self.router.add_api_route("/", self.get_quote_handler, methods=["GET"])

@@ -14,7 +14,7 @@
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <option name="SCRIPT_NAME" value="gunicorn" />
-    <option name="PARAMETERS" value="-b &quot;0.0.0.0:1140&quot; -w 4 main:app" />
+    <option name="PARAMETERS" value="-b &quot;0.0.0.0:1140&quot; -w 4 app:app" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="true" />

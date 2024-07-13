@@ -1,14 +1,15 @@
-FROM python:3.12.2-slim AS builder-image
+FROM python:slim AS builder-image
 
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
 COPY requirements.txt .
+RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir wheel
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 #* ----------------------------------------------------------------
-FROM python:3.12.2-slim AS runner-image
+FROM python:slim AS runner-image
 
 COPY --from=builder-image /venv /venv
 RUN mkdir /code

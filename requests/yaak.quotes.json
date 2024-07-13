@@ -1,7 +1,7 @@
 {
   "yaakVersion": "2024.6.6",
   "yaakSchema": 2,
-  "timestamp": "2024-07-11T17:03:12.340421874",
+  "timestamp": "2024-07-13T11:46:04.506053862",
   "resources": {
     "workspaces": [
       {
@@ -40,7 +40,7 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-11T14:52:55",
+        "updatedAt": "2024-07-12T19:37:28",
         "id": "rq_17hY3aNV1y",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
@@ -58,14 +58,14 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-11T14:52:56",
+        "updatedAt": "2024-07-12T20:02:10",
         "id": "rq_ZlSXNuel6L",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
         "model": "http_request",
         "sortPriority": 2000.0,
         "name": "Like quote",
-        "url": "http://0.0.0.0:1140/like?user_id=1&quote_id=3iDLeeC2HaT1",
+        "url": "http://0.0.0.0:1140/like?user_id=1&quote_id=mT4iARsFw",
         "urlParameters": [],
         "method": "PATCH",
         "body": {},
@@ -76,14 +76,14 @@
       },
       {
         "createdAt": "2024-07-03T15:36:25",
-        "updatedAt": "2024-07-11T14:52:56",
+        "updatedAt": "2024-07-12T20:02:22",
         "id": "rq_08SNYw6kED",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
         "model": "http_request",
         "sortPriority": 3000.0,
         "name": "Get same quote",
-        "url": "http://0.0.0.0:1140/same?user_id=1&quote_id=3iDLeeC2HaT1",
+        "url": "http://0.0.0.0:1140/same?user_id=2&quote_id=mT4iARsFw",
         "urlParameters": [],
         "method": "GET",
         "body": {},
@@ -120,7 +120,7 @@
       },
       {
         "createdAt": "2024-07-11T15:09:36",
-        "updatedAt": "2024-07-11T15:12:15",
+        "updatedAt": "2024-07-12T20:42:19",
         "id": "rq_shLvsWBO7k",
         "workspaceId": "wk_yxwTAXxlR9",
         "folderId": null,
@@ -131,7 +131,7 @@
         "urlParameters": [],
         "method": "POST",
         "body": {
-          "text": "{\n  \"query\": \"query GetRandomQuote {\\n  get_quote_handler(user_id: \\\"1\\\") {\\n    success\\n    errors\\n    quote {\\n      id\\n      quote\\n      author\\n      tags\\n      likes\\n    }\\n  }\\n}\"\n}"
+          "text": "{\n  \"query\": \"query GetRandomQuote {\\n  get_quote_handler(user_id: \\\"1\\\") {\\n    success\\n    errors\\n    quote {\\n      id\\n      quote\\n      author\\n      tags\\n      likes\\n    }\\n  }\\n}\\n\"\n}"
         },
         "bodyType": "graphql",
         "authentication": {},
@@ -220,9 +220,9 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T12:22:38.627",
-        "updatedAt": "2024-07-11T17:02:41",
+        "updatedAt": "2024-07-13T11:45:22",
         "folderId": null,
-        "name": "Like quote",
+        "name": "Get same quote",
         "sortPriority": 6000.0,
         "url": "localhost:1140",
         "service": "Quotes",
@@ -237,10 +237,10 @@
         "model": "grpc_request",
         "workspaceId": "wk_yxwTAXxlR9",
         "createdAt": "2024-07-11T12:25:57.484",
-        "updatedAt": "2024-07-11T17:02:47",
+        "updatedAt": "2024-07-13T11:45:40",
         "folderId": null,
-        "name": "Get same quote",
-        "sortPriority": 7000.0,
+        "name": "Like quote",
+        "sortPriority": 5500.0,
         "url": "localhost:1140",
         "service": "Quotes",
         "method": "LikeQuoteHandler",

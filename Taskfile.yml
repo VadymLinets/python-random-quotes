@@ -19,6 +19,10 @@ tasks:
         flask --app main run  --host $SERVER_HOST --port $SERVER_PORT
       elif [ $SERVER == "fastapi" ]; then
         fastapi dev main.py --host $SERVER_HOST --port $SERVER_PORT
+      elif [ $SERVER == "grpc" ]; then
+        python app.py
+      elif [ $SERVER == "litestar" ]; then
+        litestar run -r --host $SERVER_HOST --port $SERVER_PORT
       fi
 
   container-run:

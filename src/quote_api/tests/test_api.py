@@ -12,7 +12,7 @@ sys.path.append("../../../src")
 @pytest.fixture
 def quote():
     return quote_api_srv.Quote(
-        quote_id="r3wAKE9N-Nei",
+        id="r3wAKE9N-Nei",
         quote="Imagination will often carry us to worlds that never were. But without it we go nowhere.",
         author="Carl Sagan",
         tags=["Famous Quotes"],

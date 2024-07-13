@@ -14,7 +14,7 @@ class Service(APIInterface):
         resp = requests.get(random_quote_url)
         random_quote = resp.json()
         quote = Quote(
-            quote_id=random_quote["_id"],
+            id=random_quote["_id"],
             quote=random_quote["content"],
             author=random_quote["author"],
             tags=random_quote["tags"],

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [ "$SERVER" == "fastapi" ]; then
+if [[ "$SERVER" == "fastapi" || "$SERVER" == "litestar" ]]; then
   echo "Starting uvicorn server"
-  exec uvicorn --host "0.0.0.0" --port 1140 --workers 4 main:app
+  exec uvicorn --host "0.0.0.0" --port 1140 --workers 4 app:app
 elif [ "$SERVER" == "flask" ]; then
   echo "Starting gunicorn server"
-  exec gunicorn -b "0.0.0.0:1140" -w 4 main:app
+  exec gunicorn -b "0.0.0.0:1140" -w 4 app:app
 else
   echo "Starting gRPC server"
-  exec python main.py
+  exec python app.py
 fi
