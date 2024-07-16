@@ -56,5 +56,6 @@ It's a service that shows random quotes, allows to like them and show quote that
    task run
    ```
 
-5. Import [postman `Quotes` collection](./requests/Quotes.postman_collection.json) into `Postman` program or [yaak `Quotes` collection](./requests/yaak.quotes.json) into `Yaak` program
+5. Import [postman `Quotes` collection](./requests/Quotes.postman_collection.json) into `Postman` program
+   or [yaak `Quotes` collection](./requests/yaak.quotes.json) into `Yaak` program
 6. Send request throw `Postman` or `Yaak`
