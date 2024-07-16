@@ -60,4 +60,9 @@ It's a service that shows random quotes, allows to like them and show quote that
 
 5. Import [postman `Quotes` collection](./requests/Quotes.postman_collection.json) into `Postman` program
    or [yaak `Quotes` collection](./requests/yaak.quotes.json) into `Yaak` program
+
+   > **<span style="color:#FCE205">⚠ WARNING:</span>** Postman `Quotes` collection contains only http requests, because
+   of Postman limitations, so if you want to send graphql or grpc requests it's better to start with Yaak `Quotes`
+   collection.
+
 6. Send request throw `Postman` or `Yaak`
