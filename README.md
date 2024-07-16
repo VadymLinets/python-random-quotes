@@ -51,6 +51,8 @@ It's a service that shows random quotes, allows to like them and show quote that
     fastapi dev main.py --host "0.0.0.0" --port 1140
     ```
 
+   Or you can run `Run uvicorn` configuration if you are using `PyCharm`
+
    Or you can run the following taskfile command:
    ```shell
    task run
