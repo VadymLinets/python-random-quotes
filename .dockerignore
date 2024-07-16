@@ -94,7 +94,7 @@ venv/
 alembic
 containers
 mutation
-postman
+requests
 alembic.ini
 README.md
 Taskfile.yml
