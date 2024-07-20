@@ -1,0 +1,89 @@
+users: Users {
+  shape: person
+  style.multiple: true
+}
+
+database: Postgres {
+  shape: cylinder
+  style.multiple: true
+}
+
+random_quotes: Random Quotes Site {
+  shape: cloud
+  link: https://api.quotable.io/random
+}
+
+app: App {
+  servers: Servers {
+    fastapi: FastApi {
+      http: Http
+      graphql: Graphql
+    }
+
+    flask: Flask {
+      http: Http
+      graphql: Graphql
+    }
+
+    litestar: Litestar {
+      http: Http
+      graphql: Graphql
+    }
+
+    starlette: Starlette {
+      http: Http
+      graphql: Graphql
+    }
+
+    grpc: Grpc
+  }
+
+  services: Services {
+    heartbeat_service: Heartbeat Service
+    quotes_service: Quotes Service
+    quotes_api_service: Quotes Api Service
+
+    quotes_service -> quotes_api_service
+  }
+
+  repository: Repository {
+    postgres: Postgres
+  }
+
+  servers.fastapi.http -> services.quotes_service
+  servers.fastapi.graphql -> services.quotes_service
+  servers.flask.http -> services.quotes_service
+  servers.flask.graphql -> services.quotes_service
+  servers.litestar.http -> services.quotes_service
+  servers.litestar.graphql -> services.quotes_service
+  servers.starlette.http -> services.quotes_service
+  servers.starlette.graphql -> services.quotes_service
+  servers.grpc -> services.quotes_service
+
+  servers.fastapi.http -> services.heartbeat_service
+  servers.fastapi.graphql -> services.heartbeat_service
+  servers.flask.http -> services.heartbeat_service
+  servers.flask.graphql -> services.heartbeat_service
+  servers.litestar.http -> services.heartbeat_service
+  servers.litestar.graphql -> services.heartbeat_service
+  servers.starlette.http -> services.heartbeat_service
+  servers.starlette.graphql -> services.heartbeat_service
+  servers.grpc -> services.heartbeat_service
+
+  services.quotes_service -> repository.postgres
+  services.heartbeat_service -> repository.postgres
+}
+
+users -> app.servers.fastapi.http
+users -> app.servers.fastapi.graphql
+users -> app.servers.flask.http
+users -> app.servers.flask.graphql
+users -> app.servers.litestar.http
+users -> app.servers.litestar.graphql
+users -> app.servers.starlette.http
+users -> app.servers.starlette.graphql
+users -> app.servers.grpc
+
+app.repository.postgres -> database
+
+app.services.quotes_api_service -> random_quotes
