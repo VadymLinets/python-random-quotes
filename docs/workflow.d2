@@ -1,4 +1,4 @@
-users: Users {
+users: {
   shape: person
   style.multiple: true
 }
@@ -13,32 +13,32 @@ random_quotes: Random Quotes Site {
   link: https://api.quotable.io/random
 }
 
-app: App {
-  servers: Servers {
-    fastapi: FastApi {
-      http: Http
-      graphql: Graphql
+app: {
+  servers: {
+    fastapi: {
+      http
+      graphql
     }
 
-    flask: Flask {
-      http: Http
-      graphql: Graphql
+    flask: {
+      http
+      graphql
     }
 
-    litestar: Litestar {
-      http: Http
-      graphql: Graphql
+    litestar: {
+      http
+      graphql
     }
 
-    starlette: Starlette {
-      http: Http
-      graphql: Graphql
+    starlette: {
+      http
+      graphql
     }
 
-    grpc: Grpc
+    grpc
   }
 
-  services: Services {
+  services: {
     heartbeat_service: Heartbeat Service
     quotes_service: Quotes Service
     quotes_api_service: Quotes Api Service
@@ -47,7 +47,8 @@ app: App {
   }
 
   repository: Repository {
-    postgres: Postgres
+    peewee
+    sqlalchemy
   }
 
   servers.fastapi.http -> services.quotes_service
@@ -70,8 +71,10 @@ app: App {
   servers.starlette.graphql -> services.heartbeat_service
   servers.grpc -> services.heartbeat_service
 
-  services.quotes_service -> repository.postgres
-  services.heartbeat_service -> repository.postgres
+  services.quotes_service -> repository.peewee
+  services.heartbeat_service -> repository.peewee
+  services.quotes_service -> repository.sqlalchemy
+  services.heartbeat_service -> repository.sqlalchemy
 }
 
 users -> app.servers.fastapi.http
@@ -84,6 +87,7 @@ users -> app.servers.starlette.http
 users -> app.servers.starlette.graphql
 users -> app.servers.grpc
 
-app.repository.postgres -> database
+app.repository.peewee -> database
+app.repository.sqlalchemy -> database
 
 app.services.quotes_api_service -> random_quotes
