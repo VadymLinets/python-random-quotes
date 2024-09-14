@@ -5,7 +5,7 @@ class Quote(BaseModel):
     id: str
     quote: str
     author: str
-    tags: list[str]
+    tags: list[str] = list()
     likes: int = 0
 
     def __eq__(self, other) -> bool:

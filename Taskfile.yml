@@ -29,7 +29,7 @@ tasks:
 
   container-run:
     desc: Run application in the docker or podman container. It will also start up the database.
-    deps: [ database-up, generate-requirements ]
+    deps: [ database-up ]
     dir: "{{.USER_WORKING_DIR}}/containers"
     aliases: [ crun ]
     cmd: bash -c "$RUNNER-compose -f service.yml up -d --no-deps --build"
@@ -95,20 +95,3 @@ tasks:
       - cosmic-ray init quote.toml quote.sqlite
       - cosmic-ray exec quote.toml quote.sqlite
       - cr-html quote.sqlite > reports/quote.html
-
-  generate-requirements:
-    desc: Generate requirements.txt file for Docker containers
-    aliases: [ req ]
-    cmds:
-      - pip freeze > requirements.txt
-      - sed -i -e 's/Flask/Flask[async]/g' requirements.txt
-
-  upgrade-requirements:
-    desc: Upgrades all libraries from requirements.txt file
-    deps: [ generate-requirements ]
-    aliases: [ upgr ]
-    cmds:
-      - pip install --upgrade pip
-      - sed -i 's/==/>=/g' requirements.txt
-      - pip install -r requirements.txt --upgrade
-      - task: generate-requirements
