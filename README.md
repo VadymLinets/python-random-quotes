@@ -9,13 +9,14 @@ It's a service that shows random quotes, allows to like them and show quote that
 1. [Taskfile](https://taskfile.dev/installation/) (Optional)
 2. docker-compose or podman-compose
 3. [Postman](https://www.postman.com/downloads/) or [Yaak](https://yaak.app/download)
+4. [uv](https://docs.astral.sh/uv/getting-started/installation/)
 
 ## How to run
 
 1. Create new virtual environment and install deps
 
    ```shell
-   python -m venv .venv && .venv/bin/pip install -r requirements.txt
+   uv sync
    ```
 
    Or you can initialize everything with the following taskfile command.

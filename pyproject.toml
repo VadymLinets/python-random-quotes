@@ -1,7 +1,7 @@
 [project]
 name = "quotes-python"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "It's a service that shows random quotes, allows to like them and show quote that is pretty similar to a specified one"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -24,4 +24,8 @@ dependencies = [
     "flask[async]>=3.0.3",
     "uvicorn>=0.30.6",
     "psycopg2-binary>=2.9.9",
+    "responses>=0.25.3",
+    "pytest-mock>=3.14.0",
+    "alembic>=1.13.2",
+    "gunicorn>=23.0.0",
 ]

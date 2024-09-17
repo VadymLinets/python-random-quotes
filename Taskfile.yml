@@ -6,9 +6,7 @@ tasks:
   init:
     desc: Creates python virtual environment and installs deps
     cmds:
-      - python -m venv .venv
-      - .venv/bin/pip install --upgrade pip
-      - .venv/bin/pip install -r requirements.txt
+      - uv sync
       - cp .env.example .env
 
   run:
@@ -85,6 +83,12 @@ tasks:
   test:
     desc: Run all tests
     cmd: pytest -vv
+
+  upgrade-libraries:
+    desc: Upgrades all libraries that used on the project
+    aliases: [ upgr ]
+    cmds:
+      - uv lock --upgrade
 
   mutation-tests:
     desc: Run mutation testing
