@@ -87,8 +87,7 @@ tasks:
   upgrade-libraries:
     desc: Upgrades all libraries that used on the project
     aliases: [ upgr ]
-    cmds:
-      - uv lock --upgrade
+    cmd: uv lock --upgrade
 
   mutation-tests:
     desc: Run mutation testing
