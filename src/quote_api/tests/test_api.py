@@ -20,7 +20,7 @@ def quote():
 
 @responses.activate
 def test_get_random_quote_success(mocker, quote):
-    db = sqlalchemy.Postgres(cfg.PostgresConfig())
+    db = sqlalchemy.Postgres(cfg.PostgresConfig(POSTGRES_DSN="sqlite:///:memory:"))
     mocker.patch.object(db, "save_quote", return_value=None)
 
     responses.patch(quote_api_srv.random_quote_url)
