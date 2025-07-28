@@ -16,7 +16,7 @@ class ServerConfig(Config):
 
 class PostgresConfig(Config):
     orm: str = Field(alias="POSTGRES_ORM", default="sqlalchemy")
-    dsn: str = Field(alias="POSTGRES_DSN", default="")
+    dsn: str = Field(alias="POSTGRES_DSN")
 
 
 class QuotesConfig(Config):
