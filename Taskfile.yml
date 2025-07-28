@@ -68,7 +68,7 @@ tasks:
 
   migrate:
     desc: Run alembic migrations engine
-    aliases: [ m, mg ]
+    aliases: [ mg ]
     cmd: alembic upgrade head
 
   lint:
@@ -77,7 +77,7 @@ tasks:
 
   format:
     desc: Auto formatting python code with ruff
-    aliases: [ f, fmt ]
+    aliases: [ fmt ]
     cmd: ruff format
 
   test:
