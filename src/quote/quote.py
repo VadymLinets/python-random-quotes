@@ -16,6 +16,7 @@ class Service:
         quotes = self.db.get_quotes(user_id)
         quote = self.choose_quote(quotes, random.uniform(0.0, ONE_HUNDRED_PERCENT))
         self.db.mark_as_viewed(quote.id, user_id)
+
         return Quote(
             id=quote.id,
             quote=quote.quote,
@@ -28,6 +29,7 @@ class Service:
         view = self.db.get_view(quote_id, user_id)
         if view is None or view.liked:
             return
+
         self.db.like_quote(quote_id)
         self.db.mark_as_liked(quote_id, user_id)
 
@@ -39,6 +41,7 @@ class Service:
                 quote = self.api.get_random_quote()
         else:
             quote = self.api.get_random_quote()
+
         self.db.mark_as_viewed(quote.id, user_id)
         return Quote(
             id=quote.id,
@@ -51,9 +54,7 @@ class Service:
     def choose_quote(self, quotes: list[Quote], random_percent: float = 0.0) -> Quote:
         existing_quote_percent = ONE_HUNDRED_PERCENT - self.cfg.random_quote_chance
         if existing_quote_percent > random_percent and len(quotes) > 0:
-            likes: float = 0.0
-            for quote in quotes:
-                likes += quote.likes if quote.likes > 0 else 1
+            likes = sum(quote.likes if quote.likes > 0 else 1 for quote in quotes)
 
             accumulator: float = 0.0
             delimiter: float = likes * ONE_HUNDRED_PERCENT / existing_quote_percent

@@ -17,7 +17,9 @@ class UserAndQuoteIDRequest(_message.Message):
     QUOTE_ID_FIELD_NUMBER: _ClassVar[int]
     user_id: str
     quote_id: str
-    def __init__(self, user_id: _Optional[str] = ..., quote_id: _Optional[str] = ...) -> None: ...
+    def __init__(
+        self, user_id: _Optional[str] = ..., quote_id: _Optional[str] = ...
+    ) -> None: ...
 
 class Empty(_message.Message):
     __slots__ = ()
@@ -35,4 +37,11 @@ class Quote(_message.Message):
     author: str
     tags: _containers.RepeatedScalarFieldContainer[str]
     likes: int
-    def __init__(self, id: _Optional[str] = ..., quote: _Optional[str] = ..., author: _Optional[str] = ..., tags: _Optional[_Iterable[str]] = ..., likes: _Optional[int] = ...) -> None: ...
+    def __init__(
+        self,
+        id: _Optional[str] = ...,
+        quote: _Optional[str] = ...,
+        author: _Optional[str] = ...,
+        tags: _Optional[_Iterable[str]] = ...,
+        likes: _Optional[int] = ...,
+    ) -> None: ...

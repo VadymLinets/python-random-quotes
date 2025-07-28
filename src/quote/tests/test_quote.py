@@ -195,6 +195,6 @@ def test_choose_quote_empty_list(mocker, quote):
 
 def get_services() -> (cfg.QuotesConfig, sqlalchemy.Postgres, quote_api_srv.Service):
     quote_cfg = cfg.QuotesConfig()
-    db = sqlalchemy.Postgres(cfg.PostgresConfig())
+    db = sqlalchemy.Postgres(cfg.PostgresConfig(POSTGRES_DSN="sqlite:///:memory:"))
     api = quote_api_srv.Service(db)
     return quote_cfg, db, api
