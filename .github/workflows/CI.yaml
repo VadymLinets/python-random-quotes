@@ -33,4 +33,4 @@ jobs:
           ruff format --diff
 
       - name: Test
-        run: uv run pytest -- -vv
+        run: uv run pytest -vv
